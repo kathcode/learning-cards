@@ -1,7 +1,14 @@
-import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material"
 import Box from "@mui/material/Box"
+import { Button, TextField } from "@mui/material"
+
+import { useCard } from '../../hooks/useCard';
+import { CategoryList } from './CategoryList';
+
 
 export const CreateCard = () => {
+  const { cardInfo, createCard, updateCard } = useCard();
+  const { title, description, category } = cardInfo;
+
   return (
     <section>
       <h1>Create card</h1>
@@ -16,8 +23,8 @@ export const CreateCard = () => {
             margin="normal"
             maxRows={4}
             multiline
-            value={'as'}
-            onChange={() => { }}
+            value={title}
+            onChange={(e) => updateCard({ title: e.target.value })}
           />
           <TextField
             id="description"
@@ -26,20 +33,21 @@ export const CreateCard = () => {
             margin="normal"
             multiline
             rows={4}
-            value={'as'}
-            onChange={() => { }}
+            value={description}
+            onChange={(e) => updateCard({ description: e.target.value })}
           />
 
-          <FormControlLabel control={<Checkbox />} label="Know" />
-          <FormControlLabel control={<Checkbox />} label="Almost know" />
-          <FormControlLabel control={<Checkbox defaultChecked />} label="Don't know" />
+          <CategoryList updateCard={updateCard} category={category} />
 
           <section>
-
-            <Button variant="contained">Create</Button>
+            {cardInfo.id ?
+              <Button onClick={updateCard} variant="contained">Edit</Button> :
+              <Button onClick={createCard} variant="contained">Create</Button>
+            }
           </section>
         </>
       </Box>
+      {JSON.stringify(cardInfo)}
     </section>
   )
 }

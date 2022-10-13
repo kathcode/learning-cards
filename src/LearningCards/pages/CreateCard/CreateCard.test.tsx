@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../../shared/utils/testingUtils';
 import { CreateCard } from './CreateCard';
 
 test('renders Learning cards link', () => {
